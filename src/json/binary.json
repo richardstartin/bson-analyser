@@ -1,0 +1,34 @@
+{
+  "id": 1000000000000,
+  "timestamp": 1029831028310928,
+  "index": {
+    "tag1": {
+      "$binary": "AAA=",
+      "$type": "00"
+    },
+    "tag2": {
+      "$binary": "AAA=",
+      "$type": "00"
+    },
+    "tag3": {
+      "$binary": "AA==",
+      "$type": "00"
+    },
+    "tag4": {
+      "$binary": "AA==",
+      "$type": "00"
+    }
+  },
+  "percentiles": [
+    "p50",
+    "p90",
+    "p95",
+    "p99"
+  ],
+  "metrics": [
+    "metric1",
+    "metric2",
+    "metric3"
+  ],
+  "values": {"$binary": "QS9tjjS0Sh9BMT1nGlolEEExPWcaWiUQQTLEBxpaJRBBL22ONLRKH0ExPWcaWiUQQTE9ZxpaJRBBMsQHGlolEEEvbY40tEofQTE9ZxpaJRBBMT1nGlolEEEyxAcaWiUQ", "$type": "00"}
+}

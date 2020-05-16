@@ -1,0 +1,122 @@
+{
+  "id": 1000000000000,
+  "timestamp": 1029831028310928,
+  "metrics": [
+    {
+      "tags": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "percentile": "p50",
+      "metric": "metric1",
+      "value": 1029831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "percentile": "p90",
+      "metric": "metric1",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "percentile": "p95",
+      "metric": "metric1",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "percentile": "p99",
+      "metric": "metric1",
+      "value": 1229831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag3",
+        "tag4"
+      ],
+      "percentile": "p50",
+      "metric": "metric2",
+      "value": 1029831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag3",
+        "tag4"
+      ],
+      "percentile": "p90",
+      "metric": "metric2",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag3",
+        "tag4"
+      ],
+      "percentile": "p95",
+      "metric": "metric2",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag3",
+        "tag4"
+      ],
+      "percentile": "p99",
+      "metric": "metric2",
+      "value": 1229831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2"
+      ],
+      "percentile": "p50",
+      "metric": "metric3",
+      "value": 1029831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2"
+      ],
+      "percentile": "p90",
+      "metric": "metric3",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2"
+      ],
+      "percentile": "p95",
+      "metric": "metric3",
+      "value": 1129831.102938
+    },
+    {
+      "tags": [
+        "tag1",
+        "tag2"
+      ],
+      "percentile": "p99",
+      "metric": "metric3",
+      "value": 1229831.102938
+    }
+  ]
+}
