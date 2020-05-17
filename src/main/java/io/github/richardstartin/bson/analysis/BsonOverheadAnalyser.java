@@ -27,19 +27,33 @@ public class BsonOverheadAnalyser implements BsonWriter {
   public BsonOverheadAnalyser() {
     contexts.push(new Context("root"));
     contexts.peek().contributeSize(4 + 1); // doc length + null terminator
+    sizeForDocumentLengthsByAttribute.put("root", 4);
+    sizeForDocumentLengths += 4;
   }
 
 
-  private static class Context {
+  private class Context {
     int sizeCovered;
     final String attributeName;
+    boolean isArray;
 
     private Context(String attributeName) {
+      this (attributeName, false);
+    }
+
+    private Context(String attributeName, boolean isArray) {
       this.attributeName = attributeName;
+      this.isArray = isArray;
     }
 
     void contributeSize(int size) {
-      sizeCovered += size;
+      if (isArray) {
+        contexts.pop();
+        contexts.peek().contributeSize(size);
+        contexts.push(this);
+      } else {
+        sizeCovered += size;
+      }
     }
   }
 
@@ -85,7 +99,8 @@ public class BsonOverheadAnalyser implements BsonWriter {
 
   private void recordSize(String attribute, BsonType type, int dataSize) {
     ++sizeForNullTerminators;
-    sizeForDataByAttribute.compute(attribute, (k, v) -> (null == v ? 0 : v) + dataSize);
+    Context ctx = contexts.peek();
+    sizeForDataByAttribute.compute(ctx.isArray ? ctx.attributeName : attribute, (k, v) -> (null == v ? 0 : v) + dataSize);
     sizeForDataByType.compute(type, (t, v) -> (null == v ? 0 : v) + dataSize);
     sizeForTypeMarkersByType.compute(type, (t, v) -> (null == v ? 0 : v) + 1);
     sizeForAttributesByAttribute.compute(attribute, (a, v) -> (null == v ? 0 : v) + a.getBytes(UTF_8).length);
@@ -141,7 +156,7 @@ public class BsonOverheadAnalyser implements BsonWriter {
 
   @Override
   public void writeEndArray() {
-
+    contexts.pop();
   }
 
   @Override
@@ -272,8 +287,10 @@ public class BsonOverheadAnalyser implements BsonWriter {
     sizeForNullTerminators += 2; // (array and cstring)
     sizeForDocumentLengths += 4; // (arrays are defined as documents
     sizeForAttributesByAttribute.compute(s, (k, v) -> (null == v ? 0 : v) + k.getBytes(UTF_8).length);
+    sizeForDocumentLengthsByAttribute.compute(s, (k, v) -> (null == v ? 0 : v) + 4);
     // type byte + string + null terminator + doc length + null terminator
     contexts.peek().contributeSize(s.getBytes(UTF_8).length + 1 + 1 + 4 + 1);
+    contexts.push(new Context(s, true));
   }
 
   @Override

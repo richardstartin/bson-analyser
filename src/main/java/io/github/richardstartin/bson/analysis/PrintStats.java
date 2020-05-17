@@ -6,43 +6,35 @@ import org.bson.RawBsonDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrintStats {
 
 
   public static void main(String... args) throws IOException {
-    analyse("raw.json");
-    analyse("raw-minified.json");
-    analyse("normalised.json");
-    analyse("indexed.json");
-    analyse("indexed-bitset.json");
-    analyse("matrix.json");
-    analyse("binary.json");
-    analyse("minimised.json");
-//    analyse("metrics2-minified.json");
-//    analyse("metrics3.json");
-//    analyse("metrics3-minified.json");
-//    analyse("metrics4.json");
-//    analyse("metrics4-minified.json");
-//    analyse("metrics5.json");
-//    analyse("metrics5-minified.json");
-//    analyse("metrics6.json");
-//    analyse("metrics6-minified.json");
-//    analyse("metrics7.json");
-//    analyse("metrics7-minified.json");
-//    analyse("metrics8.json");
+    Map<String, Integer> sizes = new HashMap<>();
+    analyse("raw.json", sizes);
+    analyse("raw-minified.json", sizes);
+    analyse("normalised.json", sizes);
+    analyse("indexed.json", sizes);
+    analyse("indexed-bitset.json", sizes);
+    analyse("matrix.json", sizes);
+    analyse("binary.json", sizes);
+    analyse("minimised.json", sizes);
+    System.out.println(sizes);
   }
 
 
-  public static void analyse(String filename) throws IOException {
+  public static void analyse(String filename, Map<String, Integer> sizes) throws IOException {
     RawBsonDocument doc = RawBsonDocument.parse(getJson(filename));
+    sizes.put(filename, doc.getByteBuffer().asNIO().limit());
     BsonOverheadAnalyser analyser = new BsonOverheadAnalyser();
     analyser.pipe(new BsonBinaryReader(doc.getByteBuffer().asNIO()));
     System.out.println(filename);
     analyser.printStatistics(System.out);
     System.out.println();
     System.out.println();
-
   }
 
 
