@@ -300,11 +300,12 @@ public class BsonOverheadAnalyser implements BsonWriter {
 
   @Override
   public void writeStartDocument(String s) {
+    Context ctx = contexts.peek();
     contexts.push(new Context(s));
     ++sizeForNullTerminators;
     sizeForAttributesByAttribute.compute(s, (k, v) -> (null == v ? 0 : v) + k.getBytes(UTF_8).length);
     sizeForDocumentLengths += 4;
-    sizeForDocumentLengthsByAttribute.compute(s, (k, v) -> (v == null ? 0 : v) + 4);
+    sizeForDocumentLengthsByAttribute.compute(ctx.isArray ? ctx.attributeName : s, (k, v) -> (v == null ? 0 : v) + 4);
     contexts.peek().contributeSize(s.getBytes(UTF_8).length + 1 + 4 + 1 + 1);
   }
 
